@@ -1,44 +1,37 @@
 package com.github.frogwarm.spring.boot.admin.client.starter;
 
+import com.github.frogwarm.spring.boot.admin.client.AuthVerification;
 import com.github.frogwarm.spring.boot.admin.client.AuthVerificationFilter;
-import com.github.frogwarm.spring.boot.admin.common.ClientAuthProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.github.frogwarm.spring.boot.admin.common.AuthConstants.AUTH_CONFIG_PREFIX;
+import javax.servlet.FilterRegistration;
 
 /**
  * springboot自动配置
  */
 @Configuration
+@ConditionalOnClass(FilterRegistration.class)
 public class AuthVerificationFilterAutoConfiguration {
-    private static Logger log = LoggerFactory.getLogger(AuthVerificationFilterAutoConfiguration.class);
-
-    /**
-     * 配置注入
-     */
-    @Bean
-    @ConfigurationProperties(prefix = AUTH_CONFIG_PREFIX)
-    ClientAuthProperties clientAuthProperties() {
-        return new ClientAuthProperties();
-    }
+    private static final Logger log = LoggerFactory.getLogger(AuthVerificationFilterAutoConfiguration.class);
 
     /**
      * Filter注册
      *
-     * @param properties 配置
+     * @param authVerification 验证器
      */
     @Bean
-    public FilterRegistrationBean<AuthVerificationFilter> authVerificationFilter(ClientAuthProperties properties) {
-        properties.check();
+    public FilterRegistrationBean<AuthVerificationFilter> authVerificationFilter(AuthVerification authVerification) {
         log.debug("init authVerificationFilter");
         FilterRegistrationBean<AuthVerificationFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new AuthVerificationFilter(properties));
+        bean.setFilter(new AuthVerificationFilter(authVerification));
         bean.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
+        bean.addUrlPatterns("/actuator", "/actuator/**");
         return bean;
     }
 }

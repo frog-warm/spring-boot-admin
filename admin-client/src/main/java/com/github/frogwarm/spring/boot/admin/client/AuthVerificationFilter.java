@@ -1,42 +1,27 @@
 package com.github.frogwarm.spring.boot.admin.client;
 
-import com.github.frogwarm.spring.boot.admin.common.ClientAuthProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static com.github.frogwarm.spring.boot.admin.common.AuthConstants.AUTH_HEADER_NAME;
-import static com.github.frogwarm.spring.boot.admin.common.AuthConstants.AUTH_TOKEN_TYPE;
-
 public class AuthVerificationFilter implements Filter {
-    private static Logger log = LoggerFactory.getLogger(AuthVerificationFilter.class);
-    private final ClientAuthProperties properties;
+    private final AuthVerification authVerification;
 
-    public AuthVerificationFilter(ClientAuthProperties properties) {
-        properties.check();
-        this.properties = properties;
+    public AuthVerificationFilter(AuthVerification authVerification) {
+        this.authVerification = authVerification;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        if (!this.verification(servletRequest)) {
+        if (authVerification.verification((HttpServletRequest) servletRequest)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             servletResponse.getWriter().println("error");
         }
-    }
-
-    private boolean verification(ServletRequest servletRequest) {
-        HttpServletRequest request = ((HttpServletRequest) servletRequest);
-        String token = request.getHeader(AUTH_HEADER_NAME);
-        if (log.isDebugEnabled()) {
-            log.debug("请求地址{}获取到header中token：{}", request.getRequestURI(), token);
-        }
-        log.debug("请求地址{}获取到header中Authorization：{}", request.getRequestURI(), request.getHeader("Authorization"));
-        return AUTH_TOKEN_TYPE.equals(request.getAuthType()) && properties.getToken().equals(token);
     }
 
 

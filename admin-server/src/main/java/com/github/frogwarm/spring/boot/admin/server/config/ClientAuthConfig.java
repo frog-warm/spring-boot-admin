@@ -1,6 +1,5 @@
 package com.github.frogwarm.spring.boot.admin.server.config;
 
-import com.github.frogwarm.spring.boot.admin.common.ClientAuthProperties;
 import com.github.frogwarm.spring.boot.admin.server.auth.AuthHttpHeadersProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,18 +13,8 @@ import static com.github.frogwarm.spring.boot.admin.common.AuthConstants.AUTH_CO
 @Configuration
 public class ClientAuthConfig {
 
-    /**
-     * 配置注入
-     */
     @Bean
-    @ConfigurationProperties(prefix = AUTH_CONFIG_PREFIX)
-    ClientAuthProperties clientAuthProperties() {
-        return new ClientAuthProperties();
-    }
-
-
-    @Bean
-    AuthHttpHeadersProvider AuthHttpHeadersProvider(ClientAuthProperties clientAuthProperties) {
-        return new AuthHttpHeadersProvider(clientAuthProperties);
+    AuthHttpHeadersProvider AuthHttpHeadersProvider() {
+        return new AuthHttpHeadersProvider();
     }
 }

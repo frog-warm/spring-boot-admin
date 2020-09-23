@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.frogwarm.spring.boot.admin.client.starter.AuthVerificationFilterAutoConfiguration
+com.github.frogwarm.spring.boot.admin.client.starter.ClientAuthAutoConfiguration\
+,com.github.frogwarm.spring.boot.admin.client.starter.AuthVerificationFilterAutoConfiguration\
+,com.github.frogwarm.spring.boot.admin.client.starter.AuthVerificationWebFilterAutoConfiguration
