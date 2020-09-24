@@ -53,7 +53,9 @@ public class DingTalkNotifier extends AbstractStatusChangeNotifier {
         HashMap<String, String> params = new HashMap<>();
         params.put("text", this.getMessage(instance));
         params.put("title", this.getTitle(instance));
-        messageJson.put("atMobiles", instance.getRegistration().getMetadata().getOrDefault("atMobiles", this.atMobiles));
+        HashMap<String, Object> at = new HashMap<>();
+        at.put("atMobiles", this.getAtMobiles(instance).split(","));
+        messageJson.put("at", at);
         messageJson.put("msgtype", this.msgType);
         messageJson.put(this.msgType, params);
         HttpHeaders headers = new HttpHeaders();
@@ -63,7 +65,7 @@ public class DingTalkNotifier extends AbstractStatusChangeNotifier {
 
 
     private String getMessage(Instance instance) {
-        return this.message.getValue(new StandardEvaluationContext(instance), String.class);
+        return this.message.getValue(new StandardEvaluationContext(instance), String.class) + "\n @" + getAtMobiles(instance).replaceAll(",", " @");
     }
 
     private String getTitle(Instance instance) {
@@ -71,6 +73,10 @@ public class DingTalkNotifier extends AbstractStatusChangeNotifier {
             return DEFAULT_TITLE;
         }
         return this.title.getValue(new StandardEvaluationContext(instance), String.class);
+    }
+
+    private String getAtMobiles(Instance instance) {
+        return instance.getRegistration().getMetadata().getOrDefault("atMobiles", this.atMobiles);
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {
