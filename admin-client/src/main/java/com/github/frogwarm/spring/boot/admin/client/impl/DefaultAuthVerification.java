@@ -48,12 +48,12 @@ public class DefaultAuthVerification implements AuthVerification {
 
     private boolean verification(String token, String timestamp, String nonceStr, String url) {
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(timestamp) || StringUtils.isEmpty(nonceStr)) {
-            log.warn("{}验证权限失败，token: {}, timestamp: {} ,nonceStr: {}。", url, token, timestamp, nonceStr);
+            log.warn("{}验证权限失败，secret: {} ,token: {}, timestamp: {} ,nonceStr: {}。", url, secret, token, timestamp, nonceStr);
             return false;
         }
         boolean v = TokenUtil.verification(token, this.secret, timestamp, nonceStr);
         if (!v) {
-            log.warn("{}验证权限失败，token: {}, timestamp: {} ,nonceStr: {}。", url, token, timestamp, nonceStr);
+            log.warn("{}验证权限失败，secret: {} ,token: {}, timestamp: {} ,nonceStr: {}。", url, secret, token, timestamp, nonceStr);
         }
         return v;
     }
