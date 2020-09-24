@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.frog-warm</groupId>
         <artifactId>spring-boot-admin</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0.RELEASE</version>
     </parent>
     <artifactId>spring-boot-admin-server</artifactId>
     <name>spring-boot-admin-server</name>
@@ -13,7 +13,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>
