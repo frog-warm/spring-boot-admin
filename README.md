@@ -1,4 +1,5 @@
 # spring-boot-admin
+为spring-boot-starter-actuator添加权限验证，解决产品安全扫描时暴露信息过多问题。
 
 ## 使用手册
 ### 客户端 - springboot项目
@@ -11,7 +12,7 @@
         <version>1.0.0.RELEASE</version>
     </dependency>
 ```
-- 添加git-commit插件，引入git版本信息（可选）
+- 添加git-commit插件，界面引入git版本信息（可选）
 ```xml
 <plugin>
     <groupId>pl.project13.maven</groupId>
@@ -35,7 +36,7 @@
 2. 添加客户端配置
 ```properties
 spring.application.name=项目名称
-spring.boot.admin.client.instance.metadata.secret=${random.uuid}
+spring.boot.admin.client.instance.metadata.secret=33e1d3c240f083f0c5e5b3b41f20f7443f9b6df
 # server端启用钉钉通知时 @用户手机号
 spring.boot.admin.client.instance.metadata.atMobiles=189****2020
 spring.boot.admin.client.instance.prefer-ip=true
@@ -60,7 +61,7 @@ spring:
       client:
         instance:
           metadata:
-            secret: ${random.uuid}
+            secret: 33e1d3c240f083f0c5e5b3b41f20f7443f9b6df
             atMobiles: 189****2020 #server端启用钉钉通知时 @用户手机号
           prefer-ip: true
         url: http://localhost:40000 #server端地址
