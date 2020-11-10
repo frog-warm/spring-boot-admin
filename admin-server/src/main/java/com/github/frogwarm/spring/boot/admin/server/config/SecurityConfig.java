@@ -8,6 +8,8 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 /**
  * 登陆安全验证
+ *
+ * @author tuzy
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

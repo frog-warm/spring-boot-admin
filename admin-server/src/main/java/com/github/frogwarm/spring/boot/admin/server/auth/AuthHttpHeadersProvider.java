@@ -13,6 +13,7 @@ import static com.github.frogwarm.spring.boot.admin.common.AuthConstants.AUTH_ME
 
 /**
  * 添加用户信息请求头
+ * @author tuzy
  */
 public class AuthHttpHeadersProvider implements HttpHeadersProvider {
 

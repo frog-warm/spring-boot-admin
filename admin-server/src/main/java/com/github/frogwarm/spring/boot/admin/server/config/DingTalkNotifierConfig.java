@@ -12,6 +12,11 @@ import de.codecentric.boot.admin.server.config.AdminServerNotifierAutoConfigurat
 import de.codecentric.boot.admin.server.config.AdminServerNotifierAutoConfiguration.NotifierTriggerConfiguration;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 
+/**
+ * 钉钉通知配置
+ *
+ * @author tuzy
+ */
 @Configuration
 @ConditionalOnProperty(prefix = "spring.boot.admin.notify.dingtalk", name = {"webhook-token"})
 @AutoConfigureBefore({NotifierTriggerConfiguration.class, CompositeNotifierConfiguration.class})

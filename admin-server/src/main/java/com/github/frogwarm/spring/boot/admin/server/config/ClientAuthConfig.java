@@ -9,6 +9,7 @@ import static com.github.frogwarm.spring.boot.admin.common.AuthConstants.AUTH_CO
 
 /**
  * 客户端认证header添加配置
+ * @author tuzy
  */
 @Configuration
 public class ClientAuthConfig {
